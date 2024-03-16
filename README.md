@@ -167,13 +167,11 @@ python ledora.py
 To build the application, you can use the `pyinstaller` package to create a standalone executable file.
 
 ```shell
-pyinstaller ledora.spec
-```
-
-or 
-
-```shell
-pyinstaller --onefile --noconsole --add-data "assets;assets" --add-data "txts;txts" --add-data "external;external" ledora.py
+pyinstaller --onefile --noconsole \
+  --add-data=assets:assets \
+  --add-data=txts:txts \
+  --add-data=external:external \
+  ledora.py
 ```
 
 ## Future improvements

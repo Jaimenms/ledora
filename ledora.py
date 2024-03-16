@@ -100,7 +100,9 @@ class Ledora:
         self.pg.display.set_caption(self.name)
 
         self.width, self.height = self.get_screen_size()
+        self.height_usable = self.height - 100
         self.screen = self.get_screen()
+
 
         self.background = pg.transform.scale(self.pg.image.load(asset_item_path("Background.png")), (self.width, self.height))
         self.background_rect = self.background.get_rect(center=(self.width / 2, self.height / 2))
@@ -408,7 +410,7 @@ class Ledora:
         :return:
         """
         if self.n:
-            rect = pg.Rect(0, self.height-25, self.width*(self.word_index+1)/self.n, 20)
+            rect = pg.Rect(0, self.height_usable-25, self.width*(self.word_index+1)/self.n, 20)
             self.pg.draw.rect(self.screen, FONT_COLOR_A, rect)
 
     def btn_menu(self, pos_x, pos_y, text, background_image = None):
@@ -435,9 +437,9 @@ class Ledora:
                 btn = self.btn_menu(pos_x, pos_y, text)
                 btns[text] = btn
 
-        clipboard_btn = self.btn_menu(self.width/2, self.height - 180, "Ctrl+v")
-        info_btn = self.btn_menu(self.width/2, self.height - 120, "?")
-        quit_btn = self.btn_menu(self.width/2, self.height - 60, "Sair")
+        clipboard_btn = self.btn_menu(self.width/2, self.height_usable - 180, "Ctrl+v")
+        info_btn = self.btn_menu(self.width/2, self.height_usable - 120, "?")
+        quit_btn = self.btn_menu(self.width/2, self.height_usable - 60, "Sair")
 
         self.main_sound.play(loops=True)
 
@@ -483,7 +485,7 @@ class Ledora:
     def screen_results(self):
 
         self.results_sound.play(loops=True)
-        back_btn = self.btn_menu(self.width/2, self.height - 120, "Voltar")
+        back_btn = self.btn_menu(self.width/2, self.height_usable - 120, "Voltar")
 
         kpi = 0
         for i in range(0, self.word_index+1):
@@ -524,7 +526,7 @@ class Ledora:
             star = pg.transform.scale(pg.image.load(resource_path("assets", "star.png")), (30, 30))
             if i + 1 > s:
                 star = pg.transform.grayscale(star)
-            self.screen.blit(star, ((i+1)*60+self.width/2 - 5*60/2, self.height - 75))
+            self.screen.blit(star, ((i+1)*60+self.width/2 - 5*60/2, self.height_usable - 75))
 
         self.display_flip()
 
