@@ -14,6 +14,14 @@ that aim to speed up the reading process and improve the reading skills of dysle
 
 The game session must be overseen and operated  by a professional who can monitor the child's progress.
 
+## How to download binaries
+
+The binaries are available in the following link:
+
+* Windows 64 bits: [version 1.0.0](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_windows_64bits.exe)
+* macOS (Homebrew): work in progress
+* macOS (tar): work in progress
+
 ## How to play
 
 The first screen that you will see is the main window of the game. It looks like this:
