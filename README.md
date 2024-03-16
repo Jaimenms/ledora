@@ -16,7 +16,7 @@ The game session must be overseen and operated  by a professional who can monito
 
 The first screen that you will see is the main window of the game. It looks like this:
 
-![Main Window](docs/image_01.PNG)
+![Main Window](docs/image_01.png)
 
 Now you can choose the language (PT, ES, EN or FR) and the level 1 (frequent words) or level 2 (hard words) and start the game.
 
@@ -26,7 +26,7 @@ need to copy a text and then click in Ctrl+v button to start the game using the 
 After you choose the language and the level (or the clipboard option), the game will start with a countdown and
 you will see a word in the screen. 
 
-![Main Window](docs/image_02.PNG)
+![Main Window](docs/image_02.png)
 
 As you can see this word is printed in different colors based on the syllable (it helps the dyslexic children to read the word).
 The word will be hidden after a fraction of seconds (the time is defined by the size of the word considering 0.1 seconds
@@ -41,13 +41,13 @@ The player needs to read the word and the professional will evaluate if it is co
 
 To access these instructions you can click _?_ option in the main screen as follows:
 
-![Main Window](docs/image_04.PNG)
+![Main Window](docs/image_04.png)
 
 The game will finish when the professional press the _end key_ or when all the words are presented. In the end, 
 the game will show the number of words, the number of syllables, the reading rate in terms of syllables per minute
 and the number of times a word was repeated.
 
-![Main Window](docs/image_03.PNG)
+![Main Window](docs/image_03.png)
 
 Additionally, the screen will show stars based on the reading rate as follows:
 - loose 1 star if the number of fails is greater than 0
