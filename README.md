@@ -16,9 +16,9 @@ The game session must be overseen and operated  by a professional who can monito
 
 ## How to download binaries
 
-The binaries are available in the following link (version 1.0.1):
+The binaries are available in the following link (version 1.0.2):
 
-* [Windows 64 bits](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_1_windows_64bits.exe)
+* [Windows 64 bits](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_2_windows_64bits.exe)
 * macOS intel (Work in progress)
 
 ## How to play
