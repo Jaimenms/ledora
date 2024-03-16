@@ -1,8 +1,10 @@
-# leDora
+# Ledora - A game to help dyslexic children to improve their reading skills
+
+[![License: CC BY-NC](https://img.shields.io/badge/License-CC%20BY--NC-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 
 This repository contains the source code for the leDora project.
 
-The leDora project is a software application designed to assist professionals in improving the reading
+The Ledora project is a software application designed to assist professionals in improving the reading
 skills of dyslexic children. Dyslexia is a learning disorder that affects reading, spelling, and writing 
 abilities. This project aims to provide a supportive environment for dyslexic children to enhance their 
 reading skills through targeted exercises and interactive learning methods.
