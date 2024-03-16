@@ -2,14 +2,14 @@
 
 [![License: CC BY-NC](https://img.shields.io/badge/License-CC%20BY--NC-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 
-This repository contains the source code for the leDora project.
+This repository contains the source code for the Ledora project.
 
 The Ledora project is a software application designed to assist professionals in improving the reading
 skills of dyslexic children. Dyslexia is a learning disorder that affects reading, spelling, and writing 
 abilities. This project aims to provide a supportive environment for dyslexic children to enhance their 
 reading skills through targeted exercises and interactive learning methods.
 
-This preliminary version of the leDora project is a gaming application that uses a series of exercises
+This preliminary version of the Ledora project is a gaming application that uses a series of exercises
 that aim to speed up the reading process and improve the reading skills of dyslexic children.
 
 The game session must be overseen and operated  by a professional who can monitor the child's progress.
