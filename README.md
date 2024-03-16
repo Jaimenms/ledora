@@ -104,6 +104,7 @@ deactivate
 
 
 
+
 ## How to build the application
 
 To build the application, you can use the `pyinstaller` package to create a standalone executable file.

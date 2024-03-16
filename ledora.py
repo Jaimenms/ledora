@@ -383,9 +383,9 @@ class Ledora:
         rect = options_text.get_rect(center=(self.width / 2, 400))
         self.screen.blit(options_text, rect)
 
-    def write_text(self, text, x, y):
+    def write_text(self, text, x, y, font_size=45):
         """Draw text on the screen."""
-        f = get_font(45)
+        f = get_font(font_size)
         text_surface = f.render(text, True, (255, 255, 255))
         text_rect = text_surface.get_rect(center=(x, y))
         self.screen.blit(text_surface, text_rect)
@@ -593,12 +593,12 @@ class Ledora:
 
         self.cls()
         self.write_title()
-        self.write_text("Comandos", self.width // 2, 200)
-        self.write_text("DIREITA para a próxima palavra", self.width // 2, 400)
-        self.write_text("ESQUERDA para a palavra anterior", self.width // 2, 500)
-        self.write_text("ESPAÇO para pausar", self.width // 2, 600)
-        self.write_text("ESC para cancelar o jogo", self.width // 2, 700)
-        self.write_text("END para finalizar o jogo", self.width // 2, 800)
+        self.write_text("Comandos", self.width // 2, 200, font_size=25)
+        self.write_text("DIREITA para a próxima palavra", self.width // 2, 300, font_size=25)
+        self.write_text("ESQUERDA para a palavra anterior", self.width // 2, 350, font_size=25)
+        self.write_text("ESPAÇO para pausar", self.width // 2, 400, font_size=25)
+        self.write_text("ESC para cancelar o jogo", self.width // 2, 450, font_size=25)
+        self.write_text("END para finalizar o jogo", self.width // 2, 500, font_size=25)
         self.display_flip()
 
         waiting_for_key = True
