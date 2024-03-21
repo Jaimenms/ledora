@@ -16,10 +16,10 @@ The game session must be overseen and operated  by a professional who can monito
 
 ## How to download binaries
 
-The binaries are available in the following link:
+The binaries are available in the following link (version 1.0.3):
 
-* Windows 64 bits: [version 1.0.2](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_2_windows_64bits.exe)
-* macOS intel: : [version 1.0.2](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_2_macOS_intel.exe)
+* [Windows 64 bits](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_2_windows_64bits.exe)
+* [macOS intel](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_3_macOS_intel.exe)
 
 ## How to play
 
@@ -174,11 +174,7 @@ python -m black -l 120 ledora.py
 To build the application, you can use the `pyinstaller` package to create a standalone executable file.
 
 ```shell
-pyinstaller --onefile --noconsole \
-  --add-data=assets:assets \
-  --add-data=txts:txts \
-  --add-data=external:external \
-  ledora.py
+pyinstaller --onefile --noconsole  --add-data=assets:assets  --add-data=txts:txts --add-data=external:external  ledora.py
 ```
 
 ## Future improvements

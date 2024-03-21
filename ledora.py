@@ -9,7 +9,6 @@ from random import shuffle
 import re
 from external import pyperclip
 
-os.environ["PYGAME_FREETYPE"] = "1"
 import pygame as pg
 import pygame.freetype
 
@@ -18,7 +17,7 @@ ASSETS_PATH = "assets"
 WORD_DURATION = 0.5
 WORD_DURATION_PER_CAR = 0.1
 APP_NAME = "Ledora"
-APP_VERSION = "1.0.2"
+APP_VERSION = "1.0.3"
 FONT_COLOR = (250, 240, 230)
 FONT_COLOR_A = "steelblue3"
 FONT_COLOR_B = "white"
@@ -246,7 +245,7 @@ class Ledora:
         self.lock = True
         self.cls()
         self.draw_progress()
-        if self.word_index:
+        if self.word_index and self.wait:
             self.word_index -= 1
         text = self.words[self.word_index]
         position = self.positions[self.word_index]
