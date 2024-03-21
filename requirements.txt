@@ -1,3 +1,4 @@
 pyphen
 pyinstaller
 pygame
+black

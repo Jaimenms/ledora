@@ -18,9 +18,8 @@ The game session must be overseen and operated  by a professional who can monito
 
 The binaries are available in the following link:
 
-* Windows 64 bits: [version 1.0.0](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_windows_64bits.exe)
-* macOS (Homebrew): work in progress
-* macOS (tar): work in progress
+* Windows 64 bits: [version 1.0.2](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_2_windows_64bits.exe)
+* macOS intel: : [version 1.0.2](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_2_macOS_intel.exe)
 
 ## How to play
 
@@ -160,6 +159,14 @@ To run the application, you can execute the main script using the Python interpr
 
 ```shell
 python ledora.py
+```
+
+## How to fix coding style issues
+
+To fix coding style issues, you can use the `black` package to automatically format the code according to the PEP 8 style guide.
+
+```shell
+python -m black -l 120 ledora.py
 ```
 
 ## How to build the application
