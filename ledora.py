@@ -324,7 +324,24 @@ class Ledora:
         :return:
         """
         pp = pyphen.Pyphen(lang=locale, left=1, right=1)
-        return [pp.positions(word) for word in words]
+        return [Ledora.get_positions(pp, word) for word in words]
+
+    @staticmethod
+    def get_positions_(pp, word):
+        word_parts = word.split("-")
+        last_position = 0
+        positions = []
+        for j, word_part in enumerate(word_parts):
+            _positions = pp.positions(word_part)
+            positions.extend([last_position + p for p in _positions])
+            new_last_position = last_position + len(word_part) + 1
+            positions.append(new_last_position)
+            last_position = new_last_position
+        return positions[:-1]
+
+    @staticmethod
+    def get_positions(pp, word):
+        return pp.positions(word)
 
     def write_simple_text(self, text, font=None, dest=None):
         """

@@ -16,10 +16,10 @@ The game session must be overseen and operated  by a professional who can monito
 
 ## How to download binaries
 
-The binaries are available in the following link (version 1.0.3):
+The binaries are available in the following link (version 1.0.4):
 
-* [Windows 64 bits](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_3_windows_64bits.exe)
-* [macOS intel Ventura](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_3_macOS_intel.app.zip)
+* [Windows 64 bits](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_4_windows_64bits.exe)
+* [macOS intel Ventura](https://jaimenms-public-binaries.s3.amazonaws.com/ledora/ledora_1_0_4_macOS_intel.app.zip)
 
 ## How to play
 
