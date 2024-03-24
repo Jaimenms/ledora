@@ -1,18 +1,16 @@
 import sys
-from sys import exit
-import os
-from os import environ
-import pyphen
+import re
+from os import environ, path
 from time import sleep
 from datetime import datetime
 from random import shuffle
-import re
-from external import pyperclip
 
+import pyphen
 import pygame as pg
 import pygame.freetype
+from external import pyperclip
 
-
+# Parameters
 ASSETS_PATH = "assets"
 WORD_DURATION = 0.5
 WORD_DURATION_PER_CAR = 0.1
@@ -21,7 +19,16 @@ APP_VERSION = "1.0.3"
 FONT_COLOR = (250, 240, 230)
 FONT_COLOR_A = "steelblue3"
 FONT_COLOR_B = "white"
-LOGO_FILE = "logo_small.png"
+LOGO_IMG = "logo.png"
+BACKGROUND_IMG = "background.png"
+BUTTON_IMG = "button.png"
+STAR_IMG = "star.png"
+POSITIVE_SOUND = "click-button-140881.mp3"
+NEGATIVE_SOUND = "interface-124464.mp3"
+PAUSE_SOUND = "digital-beeping-151921.mp3"
+COUNTDOWN_SOUND = "short-beep-countdown-81121.mp3"
+RESULTS_SOUND = "crowd-cheer-ii-6263.mp3"
+MAIN_SOUND = "happy-logoversion-3-13398.mp3"
 
 environ["SDL_VIDEO_CENTERED"] = "1"
 
@@ -47,16 +54,18 @@ WORDS_MAPPING = {
 
 def resource_path(*relative_path):
     """Get absolute path to resource, works for dev and for PyInstaller"""
-    base_path = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(base_path, *relative_path)
+    base_path = getattr(sys, "_MEIPASS", path.dirname(path.abspath(__file__)))
+    return path.join(base_path, *relative_path)
 
 
-def asset_item_path(file):
-    return resource_path(ASSETS_PATH, file)
+def asset_item_path(*file):
+    """Get absolute path to asset item"""
+    return resource_path(ASSETS_PATH, *file)
 
 
-def get_font(size):  # Returns Press-Start-2P in the desired size
-    return pg.font.Font(asset_item_path("font.ttf"), size)
+def get_font(size):
+    """Returns Press-Start-2P in the desired size"""
+    return pg.font.Font(asset_item_path("fonts", "font.ttf"), size)
 
 
 class Button:
@@ -100,7 +109,7 @@ class Ledora:
 
         self.pg = pg
         self.pg.init()
-        self.pg.display.set_icon(pg.image.load(asset_item_path(LOGO_FILE)))
+        self.pg.display.set_icon(pg.image.load(asset_item_path("imgs", LOGO_IMG)))
         self.pg.display.set_caption(self.name)
 
         self.width, self.height = self.get_screen_size()
@@ -108,7 +117,7 @@ class Ledora:
         self.screen = self.get_screen()
 
         self.background = pg.transform.scale(
-            self.pg.image.load(asset_item_path("Background.png")), (self.width, self.height)
+            self.pg.image.load(asset_item_path("imgs", BACKGROUND_IMG)), (self.width, self.height)
         )
         self.background_rect = self.background.get_rect(center=(self.width / 2, self.height / 2))
 
@@ -116,12 +125,12 @@ class Ledora:
         self.initialize_words()
 
         # Instantiate mixer
-        self.positive_sound = pygame.mixer.Sound(asset_item_path("positive_beeps-85504.mp3"))
-        self.negative_sound = pygame.mixer.Sound(asset_item_path("negative_beeps-6008.mp3"))
-        self.pause_sound = pygame.mixer.Sound(asset_item_path("pause-89443.mp3"))
-        self.countdown_sound = pygame.mixer.Sound(asset_item_path("short-beep-countdown-81121.mp3"))
-        self.results_sound = pygame.mixer.Sound(asset_item_path("crowd-cheer-ii-6263.mp3"))
-        self.main_sound = pygame.mixer.Sound(asset_item_path("comic5-25269.mp3"))
+        self.positive_sound = pygame.mixer.Sound(asset_item_path("sounds", POSITIVE_SOUND))
+        self.negative_sound = pygame.mixer.Sound(asset_item_path("sounds", NEGATIVE_SOUND))
+        self.pause_sound = pygame.mixer.Sound(asset_item_path("sounds", PAUSE_SOUND))
+        self.countdown_sound = pygame.mixer.Sound(asset_item_path("sounds", COUNTDOWN_SOUND))
+        self.results_sound = pygame.mixer.Sound(asset_item_path("sounds", RESULTS_SOUND))
+        self.main_sound = pygame.mixer.Sound(asset_item_path("sounds", MAIN_SOUND))
 
     @property
     def name(self):
@@ -211,6 +220,7 @@ class Ledora:
         self.cls()
         self.word_index += 1
         text = self.words[self.word_index]
+        print("Text", text)
         position = self.positions[self.word_index]
         self.write_text_multicolor(text, position)
         self.forward_datetime = datetime.now()
@@ -293,7 +303,10 @@ class Ledora:
             sleep(2)
             self.screen_initial()
 
-        text = text.replace("\n", " ").replace(".", " ").replace(",", "")
+        text = (text.
+                replace("\n", " ").
+                replace("\r", " ")
+                )
         text = re.sub(" +", " ", text)
 
         words = text.split(" ")
@@ -302,14 +315,15 @@ class Ledora:
 
         return words
 
-    def get_position(self, words, locale="pt_PT"):
+    @staticmethod
+    def analyse_words(words, locale="pt_PT"):
         """
         Get position
         :param words:
         :param locale:
         :return:
         """
-        pp = pyphen.Pyphen(lang=locale)
+        pp = pyphen.Pyphen(lang=locale, left=1, right=1)
         return [pp.positions(word) for word in words]
 
     def write_simple_text(self, text, font=None, dest=None):
@@ -340,10 +354,12 @@ class Ledora:
         :return:
         """
         if not font:
-            font = pygame.freetype.Font(resource_path(ASSETS_PATH, "freesansbold.ttf"), int(100 * self.width / 1920))
+            font = pygame.freetype.Font(
+                resource_path(ASSETS_PATH, "fonts", "OpenDyslexic-Regular.otf"), int(100 * self.width / 1920)
+            )
             font.origin = True
 
-        text_surf_rect = font.get_rect(text)
+        text_surf_rect = font.get_rect(" " + text + " ")
         baseline = text_surf_rect.y
         text_surf = pg.Surface(text_surf_rect.size, pg.SRCALPHA)
         text_surf_rect.center = self.screen.get_rect().center
@@ -414,10 +430,9 @@ class Ledora:
             self.pg.draw.rect(self.screen, FONT_COLOR_A, rect)
 
     def btn_menu(self, pos_x, pos_y, text, background_image=None):
-        BUTTON_IMG = asset_item_path("Play Rect.png")
         if background_image:
             return Button(
-                image=pg.image.load(BUTTON_IMG),
+                image=pg.image.load(asset_item_path("imgs", BUTTON_IMG)),
                 pos=(pos_x, pos_y),
                 text_input=text,
                 font=get_font(35),
@@ -453,7 +468,7 @@ class Ledora:
         info_btn = self.btn_menu(self.width / 2, self.height_usable - 120, "?")
         quit_btn = self.btn_menu(self.width / 2, self.height_usable - 60, "Sair")
 
-        self.main_sound.play(loops=True)
+        self.main_sound.play()
 
         while True:
 
@@ -472,16 +487,16 @@ class Ledora:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
-                    exit()
+                    sys.exit()
                 if event.type == pg.MOUSEBUTTONDOWN:
 
                     for value in WORDS_MAPPING.values():
                         if quit_btn.checkForInput(MENU_MOUSE_POS):
                             pg.quit()
-                            exit()
+                            sys.exit()
                         elif info_btn.checkForInput(MENU_MOUSE_POS):
                             self.main_sound.stop()
-                            self.screen_intructions()
+                            self.screen_instructions()
                         else:
                             for item in value:
                                 btn = btns[item["text_input"]]
@@ -505,7 +520,8 @@ class Ledora:
         for i in range(0, self.word_index + 1):
             kpi += len(self.positions[i]) + 1
 
-        pace = int(kpi / self.duration * 60)
+        pace_syl = int(kpi / self.duration * 60)
+        pace_wrd = int(self.word_index + 1 / self.duration * 60)
 
         self.cls()
         self.write_title()
@@ -516,11 +532,14 @@ class Ledora:
         options_text = get_font(32).render(f"{kpi} sílabas", True, FONT_COLOR_B)
         rect = options_text.get_rect(center=(self.width / 2, 310))
         self.screen.blit(options_text, rect)
-        options_text = get_font(32).render(f"{pace} sílabas/minuto", True, FONT_COLOR_B)
+        options_text = get_font(32).render(f"{pace_syl} sílabas/minuto", True, FONT_COLOR_B)
         rect = options_text.get_rect(center=(self.width / 2, 360))
         self.screen.blit(options_text, rect)
-        options_text = get_font(32).render(f"{self.count_fails} retornos", True, FONT_COLOR_B)
+        options_text = get_font(32).render(f"{pace_wrd} palavras/minuto", True, FONT_COLOR_B)
         rect = options_text.get_rect(center=(self.width / 2, 410))
+        self.screen.blit(options_text, rect)
+        options_text = get_font(32).render(f"{self.count_fails} retornos", True, FONT_COLOR_B)
+        rect = options_text.get_rect(center=(self.width / 2, 460))
         self.screen.blit(options_text, rect)
 
         s = 5
@@ -537,7 +556,7 @@ class Ledora:
             s -= 1
 
         for i in range(5):
-            star = pg.transform.scale(pg.image.load(resource_path("assets", "star.png")), (30, 30))
+            star = pg.transform.scale(pg.image.load(resource_path("assets", "imgs", STAR_IMG)), (30, 30))
             if i + 1 > s:
                 star = pg.transform.grayscale(star)
             self.screen.blit(star, ((i + 1) * 60 + self.width / 2 - 5 * 60 / 2, self.height_usable - 75))
@@ -556,7 +575,7 @@ class Ledora:
                         self.screen_initial()
                 elif event.type == pg.QUIT:
                     self.pg.quit()
-                    exit()
+                    sys.exit()
                 elif back_btn.checkForInput(MENU_MOUSE_POS):
                     self.results_sound.stop()
                     self.screen_initial()
@@ -567,7 +586,7 @@ class Ledora:
             locale = language
         self.lock = True
         self.words = self.get_words(language=language, kind=kind, clipboard_=clipboard_)
-        self.positions = self.get_position(self.words, locale=locale)
+        self.positions = self.analyse_words(self.words, locale=locale)
         self.n = len(self.words)
 
         self.set_states()
@@ -587,7 +606,7 @@ class Ledora:
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_ESCAPE:
                         self.screen_initial()
-                    elif self.word_index + 1 >= self.n or event.key in (pg.K_END,):
+                    elif self.word_index + 1 >= self.n or event.key in (pg.K_END, pg.K_q, pg.K_RETURN):
                         self.screen_results()
                     elif event.key in (pg.K_RIGHT,):
                         self.next_word()
@@ -597,9 +616,9 @@ class Ledora:
                         self.pause_word()
                 elif event.type == pg.QUIT:
                     self.pg.quit()
-                    exit()
+                    sys.exit()
 
-    def screen_intructions(self):
+    def screen_instructions(self):
         """
         Screen instructions
         :return:
@@ -611,8 +630,8 @@ class Ledora:
         self.write_text("DIREITA para a próxima palavra", self.width // 2, 300, font_size=25)
         self.write_text("ESQUERDA para a palavra anterior", self.width // 2, 350, font_size=25)
         self.write_text("ESPAÇO para pausar", self.width // 2, 400, font_size=25)
-        self.write_text("ESC para cancelar o jogo", self.width // 2, 450, font_size=25)
-        self.write_text("END para finalizar o jogo", self.width // 2, 500, font_size=25)
+        self.write_text("ESC para cancelar", self.width // 2, 450, font_size=25)
+        self.write_text("ENTER (ou Q ou END) para finalizar", self.width // 2, 500, font_size=25)
         self.display_flip()
 
         waiting_for_key = True
@@ -620,7 +639,7 @@ class Ledora:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
-                    exit()
+                    sys.exit()
                 elif event.type == pg.KEYDOWN:
                     self.screen_initial()
                     waiting_for_key = False

@@ -2,3 +2,4 @@ pyphen
 pyinstaller
 pygame
 black
+pytest
