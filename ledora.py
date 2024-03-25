@@ -15,7 +15,7 @@ ASSETS_PATH = "assets"
 WORD_DURATION = 0.5
 WORD_DURATION_PER_CAR = 0.1
 APP_NAME = "Ledora"
-APP_VERSION = "1.0.3"
+APP_VERSION = "1.0.5"
 FONT_COLOR = (250, 240, 230)
 FONT_COLOR_A = "steelblue3"
 FONT_COLOR_B = "white"
@@ -220,7 +220,6 @@ class Ledora:
         self.cls()
         self.word_index += 1
         text = self.words[self.word_index]
-        print("Text", text)
         position = self.positions[self.word_index]
         self.write_text_multicolor(text, position)
         self.forward_datetime = datetime.now()
@@ -537,26 +536,29 @@ class Ledora:
         for i in range(0, self.word_index + 1):
             kpi += len(self.positions[i]) + 1
 
-        pace_syl = int(kpi / self.duration * 60)
-        pace_wrd = int(self.word_index + 1 / self.duration * 60)
+        pace_syl = int(kpi / (datetime.now() - self.start_time).total_seconds() * 60)
+        pace_wrd = int((self.word_index + 1) / (datetime.now() - self.start_time).total_seconds() * 60)
 
         self.cls()
         self.write_title()
         self.draw_progress()
-        options_text = get_font(32).render(f"{self.word_index} palavras", True, FONT_COLOR_B)
+        options_text = get_font(32).render(f"{self.word_index+1} palavras", True, FONT_COLOR_B)
         rect = options_text.get_rect(center=(self.width / 2, 260))
         self.screen.blit(options_text, rect)
-        options_text = get_font(32).render(f"{kpi} sílabas", True, FONT_COLOR_B)
+        options_text = get_font(32).render(f"{int(self.duration)} segundos", True, FONT_COLOR_B)
         rect = options_text.get_rect(center=(self.width / 2, 310))
         self.screen.blit(options_text, rect)
-        options_text = get_font(32).render(f"{pace_syl} sílabas/minuto", True, FONT_COLOR_B)
+        options_text = get_font(32).render(f"{kpi} sílabas", True, FONT_COLOR_B)
         rect = options_text.get_rect(center=(self.width / 2, 360))
         self.screen.blit(options_text, rect)
-        options_text = get_font(32).render(f"{pace_wrd} palavras/minuto", True, FONT_COLOR_B)
+        options_text = get_font(32).render(f"{pace_syl} sílabas/minuto", True, FONT_COLOR_B)
         rect = options_text.get_rect(center=(self.width / 2, 410))
         self.screen.blit(options_text, rect)
-        options_text = get_font(32).render(f"{self.count_fails} retornos", True, FONT_COLOR_B)
+        options_text = get_font(32).render(f"{pace_wrd} palavras/minuto", True, FONT_COLOR_B)
         rect = options_text.get_rect(center=(self.width / 2, 460))
+        self.screen.blit(options_text, rect)
+        options_text = get_font(32).render(f"{self.count_fails} retornos", True, FONT_COLOR_B)
+        rect = options_text.get_rect(center=(self.width / 2, 510))
         self.screen.blit(options_text, rect)
 
         s = 5

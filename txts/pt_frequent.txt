@@ -62,8 +62,6 @@ azul
 verde
 amarelo
 carro
-casa
-trabalho
 amigo
 familiar
 namorado
@@ -77,7 +75,6 @@ irmão
 irmã
 avô
 avó
-tempo
 clima
 sol
 chuva
@@ -91,8 +88,6 @@ doente
 saúde
 médico
 hospital
-dinheiro
-trabalho
 emprego
 negócio
 mercado
@@ -102,3 +97,4 @@ comida
 bebida
 roupa
 sapato
+correr
